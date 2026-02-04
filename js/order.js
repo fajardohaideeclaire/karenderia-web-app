@@ -13,32 +13,55 @@ menuItems.forEach(item => {
   `;
 });
 
-// Load existing orders (important!)
-orders.forEach(item => {
-  total += item.price;
-  list.innerHTML += `
-    <li class="list-group-item d-flex justify-content-between">
-      ${item.name}
-      <span>₱${item.price}</span>
-    </li>
-  `;
-});
-totalText.textContent = total;
+// Function to render orders
+function renderOrders() {
+  list.innerHTML = '';
+  total = 0;
+  
+  orders.forEach((item, index) => {
+    total += item.price;
+    list.innerHTML += `
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>${item.name}</span>
+        <div>
+          <span class="me-3">₱${item.price}</span>
+          <button class="btn btn-danger btn-sm" onclick="deleteOrder(${index})">Delete</button>
+        </div>
+      </li>
+    `;
+  });
+  
+  totalText.textContent = total;
+}
+
+// Load existing orders on page load
+renderOrders();
 
 function addOrder() {
   const item = menuItems.find(m => m.id == select.value);
+  
+  if (!item) return;
 
   orders.push(item);
   saveOrders(); // ✅ persist order
+  renderOrders();
+}
 
-  total += item.price;
+function deleteOrder(index) {
+  orders.splice(index, 1);
+  saveOrders(); // ✅ persist changes
+  renderOrders();
+}
 
-  list.innerHTML += `
-    <li class="list-group-item d-flex justify-content-between">
-      ${item.name}
-      <span>₱${item.price}</span>
-    </li>
-  `;
-
-  totalText.textContent = total;
+function clearOrder() {
+  if (orders.length === 0) {
+    alert('No orders to clear');
+    return;
+  }
+  
+  if (confirm('Are you sure you want to clear all orders?')) {
+    orders = [];
+    saveOrders(); // ✅ persist changes
+    renderOrders();
+  }
 }
