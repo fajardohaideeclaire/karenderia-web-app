@@ -1,14 +1,11 @@
-const menuItems = [
-  { name: "Adobo", price: 50 },
-  { name: "Sinigang", price: 60 },
-  { name: "Kare-Kare", price: 70 }
-];
-
-const menuList = document.getElementById("menuList");
+const table = document.getElementById("menuTable");
 
 menuItems.forEach(item => {
-  const li = document.createElement("li");
-  li.className = "list-group-item";
-  li.textContent = ${item.name} - ₱${item.price};
-  menuList.appendChild(li);
+  table.innerHTML += `
+    <tr>
+      <td>${item.id}</td>
+      <td>${item.name}</td>
+      <td>₱${item.price}</td>
+    </tr>
+  `;
 });
