@@ -5,4 +5,10 @@ const menuItems = [
   { id: 4, name: "Fried Bangus", price: 55 }
 ];
 
-let orders = [];
+// Load orders from localStorage
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+// Save helper
+function saveOrders() {
+  localStorage.setItem("orders", JSON.stringify(orders));
+}
