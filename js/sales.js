@@ -1,6 +1,8 @@
-// Static values (no database)
-const totalSales = 180;
-const totalOrders = 3;
+let totalSales = 0;
 
-document.getElementById("sales").textContent = totalSales;
-document.getElementById("orders").textContent = totalOrders;
+orders.forEach(order => {
+  totalSales += order.price;
+});
+
+document.getElementById("orderCount").textContent = orders.length;
+document.getElementById("salesTotal").textContent = totalSales;
